@@ -51,9 +51,21 @@ class Player:
         self.team = [Pokemon(random.choice(pokemon_data)) for _ in range(3)]
         self.all_pkms += self.team
     
-    def catch_pokemon(self, wild_pkm):
+    def catch_pokemon(self, wild_pkm) -> bool:
         current_hp = wild_pkm.current_hp
+        max_hp = wild_pkm.hp
         
+        catch_rate = 4 * (0.2 - (current_hp / max_hp))
+        random_rate = random.random()
+        
+        if current_hp <= 0.2 * max_hp and random_rate <= catch_rate:
+            self.all_pkms.append(wild_pkm)
+            print(f"Gotcha! Wild {wild_pkm.name} was caught!")
+            return True
+        
+        print(f"Oh, no! The Pokemon broke free!")
+        return False
+    
     
     def change_team(self):
         pass
