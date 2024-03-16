@@ -3,7 +3,7 @@ import os.path
 import random
 
 from data import save_data
-from functional import get_int
+from utils import get_int
 from pokemon import Pokemon
 
 class Player:
