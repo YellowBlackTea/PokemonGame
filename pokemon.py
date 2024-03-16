@@ -2,6 +2,8 @@
 import random
 import re
 
+from ability import Attack, Defense
+
 class Pokemon:
     def __init__(self, pokemon_dict) -> None:
         # Initialize variables from dict
@@ -16,12 +18,26 @@ class Pokemon:
         self.resistance_range = pokemon_dict.get('Resistance')
         self.skills = pokemon_dict.get('Skills')
         
-        # Initialize variables from generate_random_stats() method
-        self.level, self.level_max, self.hp, self.energy, self.regeneration, self.resistance = self.generate_random_stats()
+        # Convert Skills variable to Python List
+        skills = re.match(r"\[([^\]]+)\]", self.skills)
+        if not skills:
+            raise ValueError("Missing skills")
+        self.skills = skills.group(1)
         
+        # If range variable is giving, initialize with random stats
+        if re.search(r"(-)", self.level_range):
+            self.level, self.level_max, self.hp, self.energy, self.regeneration, self.resistance = self.generate_random_stats()
+        else:
+            self.level = int(self.level_range)
+            self.hp = int(self.hp_range)
+            self.energy = int(self.energy_range)
+            self.regeneration = int(self.regeneration_range)
+            self.resistance= int(self.resistance_range)
+            
         # Initialize variables from current stats
         self.current_hp = self.hp
         self.current_exp = self.level * 100 + 0
+        self.current_energy = self.energy
         
     # Read access only
     @property
@@ -101,7 +117,7 @@ class Pokemon:
             raise ValueError("Invalid Resistance range")
         self._resistance_range = resistance_range
         
-    # Read + write access only
+    # Read & write access only
     @property
     def skills(self):
         return self._skills
@@ -111,7 +127,7 @@ class Pokemon:
             raise ValueError("Invalid Skills")
         self._skills = skills 
         
-    # Read + write access only
+    # Read & write access only
     @property
     def level(self):
         return self._level
@@ -161,7 +177,7 @@ class Pokemon:
     def resistance(self, resistance):
         self._resistance = resistance   
             
-    # Read access only
+    # Read & write access only
     @property
     def current_hp(self):
         return self._current_hp
@@ -169,28 +185,43 @@ class Pokemon:
     def current_hp(self, current_hp):
         self._current_hp = current_hp   
     
-    # Read access only
+    # Read & write access only
     @property
     def current_exp(self):
         return self._current_exp
     @current_exp.setter
     def current_exp(self, current_exp):
         self._current_exp = current_exp   
+    
+    # Read & write access only
+    @property
+    def current_energy(self):
+        return self._current_energy
+    @current_energy.setter
+    def current_energy(self, current_energy):
+        self._current_energy = current_energy   
+    
+    @property
+    def ability(self):
+        return self._ability
+    @ability.setter
+    def ability(self, ability):
+        self._ability = ability   
         
+            
     def __str__(self) -> str:
         return f"{self.name}(Lv {self.level}, {self.current_exp}/{self.level_max*100}, {self.type}): "\
                f"HP {self.current_hp}/{self.hp}, Energy {self.energy}/{self.energy} (+{self.regeneration}), Resistance {self.resistance}"\
                f"\n {self.skills}"
     
     def generate_random_stats(self):
-        
         # Find the min and max value for these ranges
         level_min, level_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.level_range).groups())
         hp_min, hp_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.hp_range).groups())
         energy_min, energy_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.energy_range).groups())
         regeneration_min, regeneration_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.regeneration_range).groups())
         resistance_min, resistance_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.resistance_range).groups())
-
+        
         # Raise an error if value does not exist
         if not level_min or not level_max:
             raise ValueError("Missing appropriate level range")
@@ -210,12 +241,7 @@ class Pokemon:
         hp = hp_min + random.randint(1, 5) * (level - level_min)
         energy = energy_min + random.randint(1, 5) * (level - level_min)
         resistance = resistance_min + random.randint(1, 5) * (level - level_min)
-        
-        # Convert Skills variable to Python List
-        skills = re.match(r"\[([^\]]+)\]", self.skills)
-        if not skills:
-            raise ValueError("Missing skills")
-        self.skills = skills.group(1)
 
         return level, level_max, hp, energy, regeneration, resistance
-               
+    
+    
