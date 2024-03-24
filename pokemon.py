@@ -24,7 +24,7 @@ class Pokemon:
             raise ValueError("Missing skills")
         self.skills = skills.group(1)
         
-        # If range variable is giving, initialize with random stats
+        # If range variable is given, initialize with random stats
         if re.search(r"(-)", self.level_range):
             self.level, self.level_max, self.hp, self.energy, self.regeneration, self.resistance = self.generate_random_stats()
         else:
@@ -211,7 +211,7 @@ class Pokemon:
             
     def __str__(self) -> str:
         return f"{self.name}(Lv {self.level}, {self.current_exp}/{self.level_max*100}, {self.type}): "\
-               f"HP {self.current_hp}/{self.hp}, Energy {self.energy}/{self.energy} (+{self.regeneration}), Resistance {self.resistance}"\
+               f"HP {self.current_hp}/{self.hp}, Energy {self.current_energy}/{self.energy} (+{self.regeneration}), Resistance {self.resistance}"\
                f"\n {self.skills}"
     
     def generate_random_stats(self):
