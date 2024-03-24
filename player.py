@@ -2,16 +2,28 @@ import csv
 import os.path
 import random
 
-from data import save_data
-from utils import get_int
+from utils import save_data, get_int
 from pokemon import Pokemon
 
 class Player:
     def __init__(self, name) -> None:
-        self.name = name
-        self.team = []
-        self.all_pkms = []
-        
+        try:
+            with open("./data/trainer.txt", 'r') as file:
+                reader = csv.DictReader(file, delimiter="\t")
+                for row in reader:
+                    if row['Name'] == name:
+                        self.name = name
+                        self.team = row['Team']
+                        self.all_pkms = row['All Pokemon']
+                else:
+                   self.name = name
+                   self.team = []
+                   self.all_pkms = [] 
+        except FileNotFoundError:
+            self.name = name
+            self.team = []
+            self.all_pkms = []
+            
     # Read access only
     @property
     def name(self):
@@ -67,7 +79,30 @@ class Player:
         print(f"Oh, no! The Pokemon broke free!")
         return False
     
+    def add_to_all_pkms(self, wild_pkm: Pokemon):
+        bool_gotcha = self.catch_pokemon(wild_pkm)
+        # Add Wild Pkm if enough storage
+        if bool_gotcha:
+            if len(self.all_pkms) < 6:
+                self.all_pkms += [wild_pkm]
+            # Add Wild Pkm by releasing another one
+            else:
+                print(self.player.all_pkms)
+                released_pkm = get_int(f"You have too much Pokemon, who do you want to release? ")
+                print(f"7/ {wild_pkm.name}")
+                while released_pkm > 8:
+                    released_pkm = get_int(f"Please choose a number between 0 - 7, who do you want to release? ")
+                if released_pkm == 7:
+                    print(f"Bye bye {wild_pkm.name}!")
+                    return 0
+                print(f"Bye bye {self.player.all_pkms[released_pkm].name}!")
+                self.player.all_pkms[released_pkm] = wild_pkm
+                return 0
+        else:
+            return None
+            
     def change_team(self) -> None:
+        self.__str__()
         change_pkm_team = get_int("Which Pokemon do you want to change? Please choose a number between 0 to 2. ")
         while not (0 <= change_pkm_team <= 2):
             change_pkm_team = get_int("Which Pokemon do you want to change? Please choose a number between 0 to 2. ")
@@ -88,9 +123,7 @@ class Player:
         temp_swap = self.team[change_pkm_team]
         self.team[change_pkm_team] = self.all_pkms[new_pkm_team]
         self.all_pkms[new_pkm_team] = temp_swap
-        
-        #return self.team, self.all_pkms
-        
+           
     def search_trainer(self, ennemy: str) -> dict:
         player2 = {}
         try:
@@ -138,7 +171,7 @@ class Player:
         
 def main():
     pokemons = save_data("./data/pokemon.txt")
-    ash = Player('ash')
+    ash = Player('RED')
     ash.randomise_team(pokemons)
     print(ash)
     ash.randomise_team(pokemons)
