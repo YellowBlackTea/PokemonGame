@@ -1,47 +1,47 @@
 Name	Description	Element	Power	Accuracy	Cost
-Peck	An attack using the beak as a drill.	Air	80	80	15
-Thunder Cage	A weak electric shock strikes the enemy.	Air	40	70	15
+Drill Peck	An attack using the beak as a drill.	Air	80	80	15
+Thunder Wave	A weak electric shock strikes the enemy.	Air	40	70	15
 Wing Attack	The enemy is struck by large wings spread out to inflict damage.	Air	60	80	25
-Thunderbolt	An electric discharge falls on the enemy.	Air	40	80	20
+Thunder Shock	An electric discharge falls on the enemy.	Air	40	80	20
 Thunder	Lightning strikes the enemy to inflict damage.	Air	110	50	5
-Peck Drill	Strikes the enemy with a sharp beak or horn to inflict damage.	Air	35	80	25
-Drill Peck	A two-turn attack with a high critical hit rate.	Air	140	70	5
+Peck	Strikes the enemy with a sharp beak or horn to inflict damage.	Air	35	80	25
+Sky Attack	A two-turn attack with a high critical hit rate.	Air	140	70	5
 Thunder Punch	An electric punch strikes the enemy.	Air	75	80	10
-Thunder Shock	A large electric discharge falls on the enemy.	Air	90	80	10
-Whirlwind	The user flaps its wings to generate a gust that damages the enemy.	Air	40	80	25
+Thunderbolt	A large electric discharge falls on the enemy.	Air	90	80	10
+Gust	The user flaps its wings to generate a gust that damages the enemy.	Air	40	80	25
 Fly	The user flies up and strikes the enemy.	Air	90	75	10
 Blizzard	A violent snowstorm hits the enemy.	Water	110	50	5
-Bubble	Bubbles are sent forcefully at the enemy.	Water	65	80	20
+Bubble Beam	Bubbles are sent forcefully at the enemy.	Water	65	80	20
 Waterfall	The user charges at the enemy at remarkable speed.	Water	80	80	15
-Waterfall	Traps and crushes the enemy.	Water	35	65	15
-Foam	An attack of bubbles strikes the enemy.	Water	40	80	30
-Hydro Cannon	A powerful jet of water is directed at the enemy.	Water	110	60	5
+Clamp	Traps and crushes the enemy.	Water	35	65	15
+Bubble	An attack of bubbles strikes the enemy.	Water	40	80	30
+Hydro Pump	A powerful jet of water is directed at the enemy.	Water	110	60	5
 Ice Beam	A beam of ice strikes the enemy.	Water	90	80	10
 Aurora Beam	Sends a rainbow beam at the enemy.	Water	65	80	20
-Crush Claw	A large claw hammers the enemy.	Water	100	70	10
+Crabhammer	A large claw hammers the enemy.	Water	100	70	10
 Water Gun	Water is forcefully projected at the enemy.	Water	40	80	25
 Ice Punch	A punch of ice strikes the enemy.	Water	75	80	15
 Surf	A huge wave crashes down on the battlefield and inflicts damage.	Water	90	80	15
-Eruption	A deluge of burning flames submerges the enemy.	Fire	100	65	5
+Fire Blast	A deluge of burning flames submerges the enemy.	Fire	100	65	5
 Ember	The enemy is attacked by a weak flame.	Fire	40	80	25
 Flamethrower	The enemy receives a torrent of flames.	Fire	125	70	20
 Fire Punch	A fiery punch strikes the enemy.	Fire	60	80	15
-Blaze Kick	The user ignites before charging at the enemy.	Fire	90	80	25
+Flare Blitz	The user ignites before charging at the enemy.	Fire	90	80	25
 Heat Wave	The user causes a wave of heat.	Fire	80	70	10
 Fire Fang	The user uses a flaming bite.	Fire	55	75	15
 Sacred Fire	The user generates a mystical fire of fearsome intensity to attack the enemy.	Fire	80	75	5
 Overheat	Attacks the enemy at full power.	Fire	100	70	15
-Flame Kick	The user sends a flaming kick.	Fire	75	70	10
-Fire Spin	The user surrounds itself with fire and charges at the enemy.	Fire	60	80	25
+Blaze Kick	The user sends a flaming kick.	Fire	75	70	10
+Flame Wheel	The user surrounds itself with fire and charges at the enemy.	Fire	60	80	25
 Rock Throw	The user throws a rock at the enemy.	Earth	60	70	15
-Seed Bullet	The user fires a barrage of seeds at the enemy.	Earth	25	80	30
+Bullet Seed	The user fires a barrage of seeds at the enemy.	Earth	25	80	30
 Seed Bomb	The user rains down a deluge of explosive seeds on the enemy.	Earth	75	80	15
 Vine Whip	Whips the enemy with fine vines to inflict damage.	Earth	45	80	25
-Seismic Toss	The user hits the enemy with its sturdy body.	Earth	110	65	5
+Seed Flare	The user hits the enemy with its sturdy body.	Earth	110	65	5
 Leaf Blade	A leaf as sharp as a blade cuts the enemy.	Earth	90	80	15
 Wood Hammer	The user strikes the enemy with a wooden hammer.	Earth	100	80	15
 Rock Slide	Sends large rocks at the enemy to inflict damage.	Earth	75	70	10
-Rock Blast	Sharp rocks emerge from the ground under the enemy.	Earth	80	60	5
+Stone Edge	Sharp rocks emerge from the ground under the enemy.	Earth	80	60	5
 Rock Wrecker	The user attacks by hurling a large rock at the enemy.	Earth	150	70	5
 Rollout	A rock rolls over the enemy.	Earth	75	70	20
 Rock Tomb	Rocks hit the enemy.	Earth	60	75	15
