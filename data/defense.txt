@@ -1,9 +1,9 @@
 Name	Description	Element	Healing	Energy	Cost
 Landing	The user lands and rests. Restores up to half of its max HP.	Air	20-50		10
 Duracell Battery	Batteries that last a long time, really long.	Air		30-60	0
-Hydro Ring	A veil of water covers the user and regenerates its HP.	Water	30-50		20
-Fountain of Life	The user projects mysterious water around the battlefield to restore its HP.	Water	10-30		10
-Dawn	A healing move that restores HP to the user.	Fire	5-25		5
-Warm Blood	The user basks in the Sun and recovers up to half of its max HP.	Fire	10-50		10
+Aqua Ring	A veil of water covers the user and regenerates its HP.	Water	30-50		20
+Life Dew	The user projects mysterious water around the battlefield to restore its HP.	Water	10-30		10
+Morning Sun	A healing move that restores HP to the user.	Fire	5-25		5
+Hot Blood	The user basks in the Sun and recovers up to half of its max HP.	Fire	10-50		10
 Photosynthesis	The user converts light into energy.	Earth		30-60	0
-Roots	The user plants its roots and recovers HP.	Earth	30-50		20
+Ingrain	The user plants its roots and recovers HP.	Earth	30-50		20
