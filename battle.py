@@ -37,6 +37,14 @@ class Battle:
         self._player = player
 
     def calculate_coefficient(self, ability: Attack) -> float:
+        """Coefficient used in the formula to calculate damage.
+
+        Args:
+            ability (Attack): Ability as defined in the Attack class. It has a name, a description, a type a cost, a power and accuracy.
+        
+        Returns:
+            float: coefficient calulated
+        """
         coefficients = {
             "Air": {"Air": 1, "Water": 0.5, "Fire": 1, "Earth": 1.5},
             "Water": {"Air": 1.5, "Water": 1, "Fire": 1, "Earth": 0.5},
@@ -46,13 +54,33 @@ class Battle:
         return float(coefficients[self.self_pokemon.type][ability.type])
     
     def calculate_damage(self, ability: Attack) -> float:
+        """Calculate damage using the formula provided in the instruction.
+
+        Args:
+            ability (Attack): Ability as defined in the Attack class. It has a name, a description, a type a cost, a power and accuracy.
+        
+        Returns:
+            float: damage calulated
+        """
         power = ability.power
         coefficient = self.calculate_coefficient(ability)
 
         damage = round(coefficient * random.uniform(0.85, 1) * (((power * 4 * (self.target_pokemon.level + 2)) / self.target_pokemon.resistance) + 2))
         return damage
         
-    def attack(self, ability: Attack) -> None:
+    def attack(self, ability: Attack) -> None | int:
+        """Attack skill is used. 
+        If the Pokemon has enough Energy to use the skill, 
+        then attack or missed according to the formula in description.
+        path=./data/attack.txt to know more about each attack property.
+
+        Args:
+            ability (Attack): Ability as defined in the Attack class. It has a name, a description, a type a cost, a power and accuracy.
+        
+        Returns:
+            None: The battle is not finished
+            int: Return value 1 means that the ennemy pokemon is KO (maybe player won)
+        """
         damage = 0
         if self.self_pokemon.current_energy >= ability.cost:
             print(f"{self.self_pokemon.name} used {ability.name}!")
@@ -65,7 +93,7 @@ class Battle:
                 if self.target_pokemon.current_hp < 0:
                     self.target_pokemon.current_hp = 0
                     print(f"{self.target_pokemon.name} is KO!")
-                    return 1
+                    return None
             else:
                 print(f"{self.self_pokemon.name}'s attack missed!")
                 return None
@@ -73,7 +101,14 @@ class Battle:
             print(f"Not enough PP / Energy.")
             return None
 
-    def defense(self, ability: Defense) -> None:
+    def defense(self, ability: Defense):
+        """Defense skill is used. 
+        If the Pokemon has enough Energy to use the skill, 
+        then restore HP or Energy according to a random int between two values defined in the ./data/defense.txt file.
+
+        Args:
+            ability (Defense): Ability as defined in the Defense class. It has a name, a description, a type a cost, and healing and energy range.
+        """
         restore_hp = 0
         restore_energy = 0
 
@@ -103,7 +138,9 @@ class Battle:
         else:
             print(f"Not enough PP / Energy.")
         
-    def change_pokemon(self) -> None:
+    def change_pokemon(self):
+        """Change current Pokemon with another in the current team.
+        """
         print(self.player)
         changed_pkm = get_int(f"Which Pokemon do you want to change {self.self_pokemon.name} with? ")
            
@@ -121,11 +158,36 @@ class Battle:
         
         print(f"{temp_swap.name} went back to his Pokeball.\n{self.self_pokemon.name} go!")
         
-    def forfeit(self, player) -> int:
-        print(f"You have forfeited. You lost!")
+    def forfeit(self, player: Player, ennemy: Player, target=False) -> int:
+        """Print result if player has chosen to forfeit.
+
+        Args:
+            ennemy (Player): To access name of the ennemy player.
+            
+        Returns:
+            int: Return value 0 means that the player lost his battle.
+        """
+        print(f"{player.name} forfeited. {ennemy.name} wins!")
         return 0
     
-    def get_xp(self, xp_points: int) -> None:
+    def get_xp(self, xp_points: float, target: bool = False):
+        """Get XP points to the amount of the varoable xp_points.
+
+        Args:
+            xp_points (float): xp calulated using formula provided in the instruction.
+                - pve: round((10 + wild_pkm_lvl - own_pkm_lvl) / 3)
+                - pvp: round()
+            target (bool, optional): If player1 loses, then use target/ennemy formula to gain xp. Defaults to False.
+        """
+        if target:
+            self.target_pokemon.current_exp += xp_points
+            if self.target_pokemon.current_exp <= 100:
+                self.target_pokemon.level += 1
+                self.target_pokemon.hp += random.randint(1, 5)
+                self.target_pokemon.energy += random.randint(1, 5) 
+                self.target_pokemon.resistance += random.randint(1, 5)
+            return
+            
         self.self_pokemon.current_exp += xp_points
         if self.self_pokemon.current_exp <= 100:
             self.self_pokemon.level += 1
@@ -133,47 +195,14 @@ class Battle:
             self.self_pokemon.energy += random.randint(1, 5) 
             self.self_pokemon.resistance += random.randint(1, 5)
     
-    def start_battle_restore(self):
+    def start_battle_restore(self, target: bool = False):
         self.self_pokemon.current_hp = self.self_pokemon.hp
         self.self_pokemon.current_energy = self.self_pokemon.energy
-    
-    def start(self):
-        print("Battle starts!")
-        self.self_pokemon.start_battle_restore()
-        self.target_pokemon.start_battle_restore()
 
-        while self.are_pokemons_alive(self.self_pokemon) and self.are_pokemons_alive(self.target_pokemon):
-            print("\n" + "="*30)
-            print(f"{self.self_pokemon.name}: {self.self_pokemon.current_hp}/{self.self_pokemon.hp}")
-            print(f"{self.target_pokemon.name}: {self.target_pokemon.current_hp}/{self.target_pokemon.hp}")
-            print("="*30 + "\n")
-
-            self.self_pokemon_turn()
-            if not self.are_pokemons_alive(self.target_pokemon):
-                print(f"{self.target_pokemon.name} has no more Pokemon left!")
-                break
-
-            self.target_pokemon_turn()
-            if not self.are_pokemons_alive(self.self_pokemon):
-                print(f"{self.self_pokemon.name} has no more Pokemon left!")
-                break
+        if target:
+            self.target_pokemon.current_hp = self.target_pokemon.hp
+            self.target_pokemon.current_energy = self.target_pokemon.energy
         
-        print("Battle ended!")
-        if self.are_pokemons_alive(self.self_pokemon) and not self.are_pokemons_alive(self.target_pokemon):
-            print(f"{self.self_pokemon.name} wins!")
-        elif self.are_pokemons_alive(self.target_pokemon) and not self.are_pokemons_alive(self.self_pokemon):
-            print(f"{self.target_pokemon.name} wins!")
-        else:
-            print("It's a tie!")
-   
-    def target_pokemon_turn(self):
-        print(f"{self.target_pokemon.name}'s turn:")
-        move_index = random.randint(0, 2)
-        self.target_pokemon.attack(self.target_pokemon.skills[move_index], self.self_pokemon)
-
-    def are_pokemons_alive(self, player):
-        return player.current_hp > 0
-    
 if __name__ == "__main__":
     pokemons = save_data("./data/pokemon.txt")
     players = save_data("./data/trainer.txt")
