@@ -1,5 +1,4 @@
 import re
-from utils import save_data
 
 class Attack:
     def __init__(self, attack_dict) -> None:
