@@ -2,8 +2,6 @@
 import random
 import re
 
-from ability import Attack, Defense
-
 class Pokemon:
     def __init__(self, pokemon_dict) -> None:
         # Initialize variables from dict
