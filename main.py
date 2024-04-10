@@ -92,7 +92,6 @@ def quit_game(player: Player):
     player.save_info()
     sys.exit("Your progress was sucessfully saved.\nThanks for playing. See you next time!")
 
-
 def choose_action(player: Player, pokemon_data: list[dict]) -> None:
     """Choose an action from the different options in the menu screen.
 
