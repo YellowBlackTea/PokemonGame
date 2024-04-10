@@ -267,23 +267,3 @@ class PVP(Battle):
             
         # return main menu???
         
-def main():
-    pokemons = save_data("./data/pokemon.txt")
-    
-    #random_pkm1 = Pokemon(random.choice(pokemons))
-    #random_pkm2 = Pokemon(random.choice(pokemons))
-    ash = Player('ash')
-    red = Player('red')
-    ash.randomise_team(pokemons)
-    red.randomise_team(pokemons)
-    random_pkm1 = ash.team[0]
-    random_pkm2 = red.team[0]
-    print("===========")
-    print(random_pkm1)
-    print(random_pkm2)
-    print("===========")
-    pvp = PVP(random_pkm1, random_pkm2, ash, red)
-    pvp.start()
-    
-if __name__ == '__main__':
-    main()
