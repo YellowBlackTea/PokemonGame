@@ -265,5 +265,3 @@ class PVP(Battle):
             else:
                 same_round = True
             
-        # return main menu???
-        
