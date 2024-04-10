@@ -12,7 +12,6 @@ class Battle:
         self.target_pokemon = target_pokemon
         self.player = player
     
-    # Read access only
     @property
     def self_pokemon(self):
         return self._self_pokemon
@@ -20,7 +19,6 @@ class Battle:
     def self_pokemon(self, self_pokemon):
         self._self_pokemon = self_pokemon
         
-    # Read & write access only
     @property
     def target_pokemon(self):
         return self._target_pokemon
@@ -28,7 +26,6 @@ class Battle:
     def target_pokemon(self, target_pokemon):
         self._target_pokemon = target_pokemon
 
-    # Read access only
     @property
     def player(self):
         return self._player
@@ -158,7 +155,7 @@ class Battle:
         
         print(f"{temp_swap.name} went back to his Pokeball.\n{self.self_pokemon.name} go!")
         
-    def forfeit(self, player: Player, ennemy: Player, target=False) -> int:
+    def forfeit(self, player: Player, ennemy: Player) -> int:
         """Print result if player has chosen to forfeit.
 
         Args:
@@ -196,6 +193,11 @@ class Battle:
             self.self_pokemon.resistance += random.randint(1, 5)
     
     def start_battle_restore(self, target: bool = False):
+        """Start each battle with all Pokemon stats restored to its max value.
+
+        Args:
+            target (bool, optional): Restore also stats for the ennmy/target Pokemon in case of PvP. Defaults to False.
+        """
         self.self_pokemon.current_hp = self.self_pokemon.hp
         self.self_pokemon.current_energy = self.self_pokemon.energy
 
