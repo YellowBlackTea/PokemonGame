@@ -1,4 +1,5 @@
 import random
+import time
 
 from battle import Battle
 from pokemon import Pokemon
@@ -13,10 +14,24 @@ class PVE(Battle):
     def __init__(self, self_pokemon: Pokemon, target_pokemon: Pokemon, player: Player) -> None:
         super().__init__(self_pokemon, target_pokemon, player)
     
-    def randomize_wild_pokemon(self, pokemon_data: list[dict]) -> None:
+    def randomize_wild_pokemon(self, pokemon_data: list[dict]):
+        """Randomize the wild pokemon's stats.
+
+        Args:
+            pokemon_data (list[dict]): Pokemon data file using the ./utils/save_data format.
+        """
         self.target_pokemon = Pokemon(random.choice(pokemon_data))
     
-    def who_start(self, start=None):
+    def who_start(self, start: int = None) -> int:
+        """Randomize whose turn it is for the round, then lock it into that cycle.
+
+        Args:
+            start (int, optional): If the cycle is defined, then this cycle of turn is maintained using this variable. 
+            Defaults to None, meaning the cycle is not define yet.
+
+        Returns:
+            int: The start variable to know which cycle was chosen randomly.
+        """
         if not start:
             start = random.randint(0, 1)
          
@@ -60,14 +75,28 @@ class PVE(Battle):
         
         return list_dict
     
-    def do_nothing(self) -> None:
+    def do_nothing(self):
+        """Print result if player has chosen to do nothing;
+        """
         print(f"{self.self_pokemon.name} is staring at you...")
     
     def flee(self) -> int:
+        """Print result if player has chosen to flee.
+
+        Returns:
+            int: Return value 0 means that the player lost his battle.
+        """
         print(f"You got away safely.")
         return 0
     
-    def all_ko(self) -> int:
+    def all_ko(self) -> int | None:
+        """Check if all 3 Pokemon in the team are KO.
+        If not, the KO'd Pokemon is replaced by the next one.
+
+        Returns:
+            int: Return value 0 means that the player lost his battle.
+            None: Not all 3 Pokemon are KO.
+        """
         next = 1
         while self.self_pokemon.current_hp == 0:
             print(f"{self.self_pokemon.name} is KO.")
@@ -81,6 +110,12 @@ class PVE(Battle):
                 return None
     
     def self_pokemon_turn(self) -> None | int:
+        """All different actions defining a player's turn.
+
+        Returns:
+            None: The battle is not finished, own Pokemons are still alive.
+            int: Return value 0 means that the player lost his battle.
+        """
         list_skill_format = self.save_indexed_skills(self.self_pokemon)
         last_index = len(list_skill_format)
         
@@ -113,9 +148,11 @@ class PVE(Battle):
             elif action == last_index + 3:
                 return self.flee()
             else:
-                action = get_int(f"Please choose an action between 0 - {last_index + 2}. ")
+                action = get_int(f"Please choose an action between 0 - {last_index + 3}. ")
     
-    def target_pokemon_turn(self) -> None:
+    def target_pokemon_turn(self):
+        """Wild Pokemon's turn whose only action is to use a skill. The choice of the skill is randomize.
+        """
         # Check if target pkm is not KO
         if self.target_pokemon.current_hp == 0:
             return True
@@ -125,6 +162,9 @@ class PVE(Battle):
         print(f"Wild {self.target_pokemon.name}'s turn!")
         rand_skill = random.choice(list_skill_format)
         
+        # Sleep to slow down the process
+        time.sleep(1)
+
         # Swap to use the Ability class
         temp_swap = self.self_pokemon
         self.self_pokemon = self.target_pokemon
@@ -147,7 +187,9 @@ class PVE(Battle):
             self.target_pokemon = temp_swap   
      
     def start(self):
-        print("Battle starts!")
+        """Start of the battle defining each round.
+        """
+        print("\n\nBattle begins!\n")
          
         self.start_battle_restore()
         
@@ -162,14 +204,16 @@ class PVE(Battle):
         #   - target pkm gotcha --> return 0 (no xp)
         #   - flee --> return 0 (no xp)
         while not end:
+            print("----------")
             print(f"Round {round}")
             
             if start == 0: 
-                # Special case first Pkm is KO or all 3 are KO
+                # Special case all 3 are KO, if first pkm KO then next one
                 end = self.all_ko()
                 if end == 0:
                     print(f"\nBATTLE END")
                     end = True
+                    break
             
                 # Start of a round = my pkm starts
                 end = self.self_pokemon_turn()
@@ -178,6 +222,7 @@ class PVE(Battle):
                 if end == 0:
                     print(f"\nBATTLE END")
                     end = True
+                    break
                 
                 target_ko = self.target_pokemon_turn() 
                 # End KO'd target pkm + get xp
@@ -189,11 +234,12 @@ class PVE(Battle):
             
             # Start of a round: target starts
             if start == 1:
-                # Special case first Pkm is KO or all 3 are KO
+                # Special case all 3 are KO, if first pkm KO then next one
                 end = self.all_ko()
                 if end == 0:
                     print(f"\nBATTLE END")
                     end = True
+                    break
                 target_ko = self.target_pokemon_turn()  
                 
                 # Start of a round (case 1)
@@ -203,6 +249,7 @@ class PVE(Battle):
                 if end == 0:
                     print(f"\nBATTLE END")
                     end = True
+                    break
                 
                 # End KO'd target pkm + get xp
                 if target_ko == True:
@@ -212,18 +259,4 @@ class PVE(Battle):
             
             round += 1
             
-        # return main menu???
         
-def main():
-    pokemons = save_data("./data/pokemon.txt")
-    
-    #random_pkm1 = Pokemon(random.choice(pokemons))
-    random_pkm2 = Pokemon(random.choice(pokemons))
-    ash = Player('ash')
-    ash.randomise_team(pokemons)
-    random_pkm1 = ash.team[0]
-    pve = PVE(random_pkm1, random_pkm2, ash)
-    pve.start()
-    
-if __name__ == '__main__':
-    main()
