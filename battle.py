@@ -1,6 +1,6 @@
 import random
 
-from utils import save_data, get_int
+from utils import get_int
 
 from ability import Attack, Defense
 from player import Player
@@ -205,17 +205,3 @@ class Battle:
             self.target_pokemon.current_hp = self.target_pokemon.hp
             self.target_pokemon.current_energy = self.target_pokemon.energy
         
-if __name__ == "__main__":
-    pokemons = save_data("./data/pokemon.txt")
-    players = save_data("./data/trainer.txt")
-    #self_pokemon_pokemon = Pokemon(pokemons[0])  
-    target_pokemon_pokemon = Pokemon(pokemons[1])
-
-    player = Player('Joe')
-    player.randomise_team(pokemons)
-    self_pokemon_pokemon = player.team[0]
-    print(player)
-    print(self_pokemon_pokemon)
-    print("====")
-    battle = Battle(self_pokemon_pokemon, target_pokemon_pokemon, player)
-    battle.change_pokemon()
