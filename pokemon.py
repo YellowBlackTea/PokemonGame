@@ -9,7 +9,7 @@ class Pokemon:
         # Initialize variables from dict
         self.name = pokemon_dict.get('Name')
         #self.before = pokemon_dict.get('Before')
-        self.evolve = pokemon_dict.get('After')
+        #self.evolve = pokemon_dict.get('After')
         self.type = pokemon_dict.get('Element')
         self.level_range = pokemon_dict.get('Level')
         self.hp_range = pokemon_dict.get('HP')
@@ -18,8 +18,16 @@ class Pokemon:
         self.resistance_range = pokemon_dict.get('Resistance')
         self.skills = pokemon_dict.get('Skills')
         
+        self.level_max = 0
+        try:
+            self.level_max = int(pokemon_dict.get('Level Max'))
+            self.current_exp = int(pokemon_dict.get('Current EXP'))
+        except TypeError:
+            self.level_max = 0
+            self.current_exp = 0
+        
         # Convert Skills variable to Python List
-        skills = re.match(r"\[([^\]]+)\]", self.skills)
+        skills = re.match(r"\[?([^\]]+)\]?", self.skills)
         if not skills:
             raise ValueError("Missing skills")
         self.skills = skills.group(1)
@@ -33,13 +41,13 @@ class Pokemon:
             self.energy = int(self.energy_range)
             self.regeneration = int(self.regeneration_range)
             self.resistance= int(self.resistance_range)
+        
             
         # Initialize variables from current stats
         self.current_hp = self.hp
         self.current_exp = self.level * 100 + 0
         self.current_energy = self.energy
         
-    # Read access only
     @property
     def name(self):
         return self._name
@@ -49,7 +57,6 @@ class Pokemon:
             raise ValueError("Invalid Name")
         self._name = name
         
-    # Read access only
     @property
     def evolve(self):
         return self._evolve
@@ -57,7 +64,6 @@ class Pokemon:
     def evolve(self, evolve):
         self._evolve = evolve
         
-    # Read access only
     @property
     def type(self):
         return self._type
@@ -67,7 +73,6 @@ class Pokemon:
             raise ValueError("Invalid Element Type")
         self._type = type
     
-    # Read access only
     @property
     def level_range(self):
         return self._level_range
@@ -77,7 +82,6 @@ class Pokemon:
             raise ValueError("Invalid Level range")
         self._level_range = level_range
         
-    # Read access only
     @property
     def hp_range(self):
         return self._hp_range
@@ -87,7 +91,6 @@ class Pokemon:
             raise ValueError("Invalid HP range")
         self._hp_range = hp_range
         
-    # Read access only
     @property
     def energy_range(self):
         return self._energy_range
@@ -97,7 +100,6 @@ class Pokemon:
             raise ValueError("Invalid Energy range")
         self._energy_range = energy_range
         
-    # Read access only
     @property
     def regeneration_range(self):
         return self._regeneration_range
@@ -107,7 +109,6 @@ class Pokemon:
             raise ValueError("Invalid Regeneration range")
         self._regeneration_range = regeneration_range
         
-    # Read access only
     @property
     def resistance_range(self):
         return self._resistance_range
@@ -117,7 +118,6 @@ class Pokemon:
             raise ValueError("Invalid Resistance range")
         self._resistance_range = resistance_range
         
-    # Read & write access only
     @property
     def skills(self):
         return self._skills
@@ -127,7 +127,6 @@ class Pokemon:
             raise ValueError("Invalid Skills")
         self._skills = skills 
         
-    # Read & write access only
     @property
     def level(self):
         return self._level
@@ -137,7 +136,6 @@ class Pokemon:
             raise ValueError("Invalid Level")
         self._level = level
         
-    # Read access only
     @property
     def level_max(self):
         return self._level_max
@@ -145,7 +143,6 @@ class Pokemon:
     def level_max(self, level_max):
         self._level_max = level_max
     
-    # Read access only
     @property
     def hp(self):
         return self._hp
@@ -153,7 +150,6 @@ class Pokemon:
     def hp(self, hp):
         self._hp = hp    
      
-    # Read access only
     @property
     def energy(self):
         return self._energy
@@ -161,7 +157,6 @@ class Pokemon:
     def energy(self, energy):
         self._energy = energy  
     
-    # Read access only
     @property
     def regeneration(self):
         return self._regeneration
@@ -169,7 +164,6 @@ class Pokemon:
     def regeneration(self, regeneration):
         self._regeneration = regeneration 
         
-    # Read access only
     @property
     def resistance(self):
         return self._resistance
@@ -177,7 +171,6 @@ class Pokemon:
     def resistance(self, resistance):
         self._resistance = resistance   
             
-    # Read & write access only
     @property
     def current_hp(self):
         return self._current_hp
@@ -185,7 +178,6 @@ class Pokemon:
     def current_hp(self, current_hp):
         self._current_hp = current_hp   
     
-    # Read & write access only
     @property
     def current_exp(self):
         return self._current_exp
@@ -193,7 +185,6 @@ class Pokemon:
     def current_exp(self, current_exp):
         self._current_exp = current_exp   
     
-    # Read & write access only
     @property
     def current_energy(self):
         return self._current_energy
@@ -210,11 +201,22 @@ class Pokemon:
         
             
     def __str__(self) -> str:
+        """Print string of Pokemon class. It consists of the name of the Pokemon with all its corresponding information.
+
+        Returns:
+            str: the str/print
+        """
         return f"{self.name}(Lv {self.level}, {self.current_exp}/{self.level_max*100}, {self.type}): "\
                f"HP {self.current_hp}/{self.hp}, Energy {self.current_energy}/{self.energy} (+{self.regeneration}), Resistance {self.resistance}"\
                f"\n {self.skills}"
     
-    def generate_random_stats(self):
+    def generate_random_stats(self) -> int:
+        """Generate random stats for a Pokemon.
+        Usually in the case when a new player is created.
+
+        Returns:
+            int: all info regarding the Pokemon including level, level_max, hp, energy, regeneration and resistance stats. 
+        """
         # Find the min and max value for these ranges
         level_min, level_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.level_range).groups())
         hp_min, hp_max = map(int, re.match(r"([0-9]+)?\s+-\s+([0-9]+)?", self.hp_range).groups())
@@ -244,4 +246,34 @@ class Pokemon:
 
         return level, level_max, hp, energy, regeneration, resistance
     
-    
+    @classmethod
+    def from_string(cls, string: str):
+        """Transform str format of the Pokemon to a Pokemon class object.
+
+        Args:
+            string (str): The Pokemon string format information.
+
+        Returns:
+            Pokemon: a Pokemon object corresponding to the string in input.
+        """
+        pattern = r"(\w+)\(Lv (\d+), (\d+)\/(\d+), (\w+)\): HP (\d+)\/(\d+), Energy (\d+)\/(\d+) \(\+(\d+)\), Resistance (\d+)\s (.+)"
+        match = re.match(pattern, string)
+        
+        if match:
+            name = match.group(1)
+            level = match.group(2)
+            current_exp = match.group(3)
+            level_max = match.group(4)
+            element = match.group(5)
+            hp = match.group(7)
+            energy = match.group(9)
+            regeneration = match.group(10)
+            resistance = match.group(11)
+            skills = match.group(12)
+            
+            new_pkm = {'Name': name, 'Element': element, 'Level': level, 'HP': hp, 
+                       'Energy': energy, 'Regeneration': regeneration, 'Resistance': resistance,
+                       'Skills': str(skills), 'Level Max': level_max, 'Current EXP': current_exp}
+            
+            return cls(new_pkm)
+        
