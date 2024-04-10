@@ -4,7 +4,7 @@ import os.path
 import random
 import sys
 
-from utils import save_data, get_int
+from utils import get_int
 from pokemon import Pokemon
 
 class Player:
@@ -234,29 +234,3 @@ class Player:
                 
             writer.writerow({'Name': self.name, 'Team': [str(pkm) for pkm in self.team], 'All Pokemon': [str(pkm) for pkm in self.all_pkms]})
         
-def main():
-    pokemons = save_data("./data/pokemon.txt")
-    ash = Player('ash')
-    ash.randomise_team(pokemons)
-    print(ash)
-    ash.randomise_team(pokemons)
-    print(ash)
-    ash.save_info()
-    ash.change_team()
-    print(ash)
-    """ wild_pkm_full_hp = {'Name': 'Pikachu', 'Before': '', 'After': 'Raichu', 'Element': 'Air','Level': '5', 
-                        'HP': '150', 'Energy': '65', 'Regeneration': '9','Resistance': '45', 
-                        'Skills': '[Thunderbolt, Thunder, Thunder Shock]'}
-    
-    wild_pkm_dying_hp = {'Name': 'Pikachu', 'Before': '', 'After': 'Raichu', 'Element': 'Air','Level': '5', 
-                        'HP': '20', 'Energy': '65', 'Regeneration': '9','Resistance': '45', 
-                        'Skills': '[Thunderbolt, Thunder, Thunder Shock]'}
-    """
-    
-    ennemy = ash.search_trainer('RED')
-    print(ennemy)
-    ash.save_info()
-
-            
-if __name__ == "__main__":
-    main()
