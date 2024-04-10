@@ -201,10 +201,11 @@ class Pokemon:
         
             
     def __str__(self) -> str:
-        """Print string of Pokemon class. It consists of the name of the Pokemon with all its corresponding information.
+        """Print string of Pokemon class. 
+        It consists of the name of the Pokemon with all its corresponding information.
 
         Returns:
-            str: the str/print
+            str: Information of a Pokemon.
         """
         return f"{self.name}(Lv {self.level}, {self.current_exp}/{self.level_max*100}, {self.type}): "\
                f"HP {self.current_hp}/{self.hp}, Energy {self.current_energy}/{self.energy} (+{self.regeneration}), Resistance {self.resistance}"\
