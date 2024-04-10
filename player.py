@@ -93,7 +93,8 @@ class Player:
             pokemon_data (list[dict]): list of all Pokemon data read from ./data/pokemon.txt.
         """
         self.team = [Pokemon(random.choice(pokemon_data)) for _ in range(3)]
-        self.all_pkms += self.team
+        if len(self.all_pkms) < 6:
+            self.all_pkms += self.team
     
     def catch_pokemon(self, wild_pkm: Pokemon) -> bool:
         """Check if the Pokemon was successfully caught or not.
