@@ -1,1 +1,3 @@
 pyfiglet
+pytest
+pytest-mock
