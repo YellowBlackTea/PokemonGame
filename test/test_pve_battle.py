@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch
 
-from main import pve_battle
+from project import pve_battle
 from player import Player
 from pokemon import Pokemon
 from pve import PVE

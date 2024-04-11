@@ -3,7 +3,7 @@ import sys
 import pytest
 from unittest.mock import patch, Mock
 
-from main import quit_game
+from project import quit_game
 from player import Player
 
 

@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, Mock
 
-from main import change_team
+from project import change_team
 from player import Player
 
 

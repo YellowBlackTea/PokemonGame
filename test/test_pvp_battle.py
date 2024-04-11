@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from main import pvp_battle
+from project import pvp_battle
 from player import Player
 from pokemon import Pokemon
 
