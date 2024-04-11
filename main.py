@@ -57,12 +57,11 @@ def pve_battle(player: Player, pokemon_data: list[dict]) -> None:
     pve.start()
     print("\n\nGoing back to main menu...")
 
-def pvp_battle(player: Player, pokemon_data: list[dict]) -> None:
+def pvp_battle(player: Player) -> None:
     """Case 3: Choose PvP battle, battle against another player on the same screen.
 
     Args:
         player (Player): Name or player class of the first player.
-        pokemon_data (list[dict]): list of all Pokemon data read from ./data/pokemon.txt.
     """
     ennemy = input("What's the name of the trainer you want to battle with? ")
     while True:
@@ -76,6 +75,10 @@ def pvp_battle(player: Player, pokemon_data: list[dict]) -> None:
     print("Initializing...")
     print(f"\n{player.name} team is: \n{player}")
     print(f"{playable_enemy.name} team is: \n{playable_enemy}")
+    
+    if not player.team or not playable_enemy.team:
+        raise ValueError("Please re-run the game. Trainer file was modified.")
+
     initial_p1_pkm = player.team[0]
     initial_p2_pkm = playable_enemy.team[0]
     print("Preparing...")
@@ -124,7 +127,7 @@ def choose_action(player: Player, pokemon_data: list[dict]) -> None:
             case 3:
                 pvp_battle(player, pokemon_data)
                 
-                choose_action(player, pokemon_data)
+                choose_action(player)
                         
             case 4:
                 quit_game(player)
