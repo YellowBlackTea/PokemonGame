@@ -161,7 +161,7 @@ class PVE(Battle):
         
         print(f"Wild {self.target_pokemon.name}'s turn!")
         rand_skill = random.choice(list_skill_format)
-        
+
         # Sleep to slow down the process
         time.sleep(1)
 
@@ -169,6 +169,9 @@ class PVE(Battle):
         temp_swap = self.self_pokemon
         self.self_pokemon = self.target_pokemon
         self.target_pokemon = temp_swap
+        
+        if not rand_skill:
+            raise ValueError("Please re-run the game. Trainer file was modified.")
         
         if rand_skill['Type'] == 'atk':
             self.attack(rand_skill['Skill'])
