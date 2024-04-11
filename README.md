@@ -66,8 +66,15 @@ This project contains **3 main parts**:
 ### Root
 In the `root` directory, the `main` function is in the `project.py` file. This file calls multiple classes which are defined here.
 
-The `Pokemon` class: essential to create a random (or not) Pokemon from a list of Pokemon initially in a dict. As the information read from `data/pokemon.txt` is in a `list[doc]` format, it was used as an initial input to the `Pokemon` class.
+#### Pokemon Class
+The `Pokemon` class: essential to create a random (or not) Pokemon from a list of Pokemon initially in a dict. As the information read from `data/pokemon.txt` is in a `list[doc]` format, it was used as an initial input to the `Pokemon` class. A `str` method is defined to be able to output the `Pokemon` class as a `str` in the format expected by the instruction.
 
+2 methods:
+- `generate_random_stats()`: Generate random stats to define a Pokemon.
+- `from_string()`: Transform a string to a Pokemon class.
+
+#### Player Class
+The 
 
 
 ### Data
