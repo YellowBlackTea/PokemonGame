@@ -13,7 +13,12 @@
 ### ✨ [Demo](https://github.com/YellowBlackTea/PokemonGame)
 
 ## Description
-A Pokemon turn-based battle game implemented in Python using OOP. This game is exclusively interactive with the CLI. 
+A Pokemon turn-based battle game implemented in Python using OOP. This game is exclusively interactive with the CLI. Two different modes can be played: a Player versus Player (PvP) and a Player versus Environnment (PvE).
+
+- In the **PvP** mode, the first Player is the one who start the game, s/he then has the ability to search for a registered trainer name. Once found, the battle starts by taking turns. Each player has a team composed of 3 Pokemons, and the possibilities to change the Pokemon in a PC / box storage of a maximum of 6 Pokemons. Whoever wins the battle get XP.
+- In the **PvE** mode, the Player battles against a wild Pokemon, and s/he has the possibility to catch it.
+
+A trainer is automatically registered in a file when a game starts and the user input a name. A same name cannot be registered, so only the newest one will be saved.
 
 ### Background
 This project is part of Havard/edX CS50P Final Project. The instruction and the formula for computing the catch rate or the effectiveness of an attack was greatly inspired by Sorbonne Université MU4RBI01 course.
@@ -31,6 +36,8 @@ Not in any soon, but it would be great to have a GUI instead of using the CLI.
 4. [Usage](#usage)
 5. [Run tests](#run-tests)
 6. [Code Overview](#code-overview)
+    - [Root Directory](#root)
+    - [Data Directory](#data)
 
 ## Install
 The easiest way to install the game is to clone this repository:
@@ -67,23 +74,46 @@ This project contains **3 main parts**:
 In the `root` directory, the `main` function is in the `project.py` file. This file calls multiple classes which are defined here.
 
 #### Pokemon Class
-The `Pokemon` class: essential to create a random (or not) Pokemon from a list of Pokemon initially in a dict. As the information read from `data/pokemon.txt` is in a `list[doc]` format, it was used as an initial input to the `Pokemon` class. A `str` method is defined to be able to output the `Pokemon` class as a `str` in the format expected by the instruction.
-
-2 methods:
-- `generate_random_stats()`: Generate random stats to define a Pokemon.
-- `from_string()`: Transform a string to a Pokemon class.
+The `Pokemon` class is essential to create a random (or not) Pokemon from a list of Pokemon initially in a dict. As the information read from `data/pokemon.txt` is in a `list[doc]` format, it was used as an initial input to the `Pokemon` class. A `str` method is defined to be able to output the `Pokemon` class as a `str` in the format expected by the instruction.
 
 #### Player Class
-The 
+The `Player` class creates a Player by its name. Each player is unique with an automatic randomized team associated.
 
+#### Battle Class
+The `Battle` class creates all actions used in a battle whether it is against another player or a wild Pokemon. Thus, `PVE` class and `PVP` class were created as inheritence of this parent class.
+
+If the Pokemon chooses to defend itself, then a random number is chosen from the range of the regeneration ability.
+
+If the Pokemon chooses to launch an Attack, then a random number is chosen between 0 and 100. And if that number is greater than the accuracy of the attack, the Pokemon can sucessfully launch the attack using the following formula to calculate the **damage taken**:
+
+$damage\_taken = round(b * rand(0.85, 1) * \frac{power(4 *  target\_pokemon\_level + 2)}{target\_pokemon\_resistance} + 2)$
+
+with b, the coefficient defined in the following table. 
+|   | Air | Water | Fire | Earth |
+|---|-----|-------|------|-------|
+| **Air**   | 1   | 0.5   | 1    | 1.5   |
+| **Water** | 1.5 | 1     | 1    | 0.5   |
+| **Fire**  | 0.5 | 1.5   | 1    | 1     |
+| **Earth** | 1   | 0.5   | 1.5  | 1     |
+
+
+As soon as the wild Pokemon HP falls below 20%, then the Player has the possibility to **catch the Pokemon** using this catch_rate formula.
+
+$catch\_rate = 4 * (0.2 - \frac{target\_current\_hp}{target\_max\_hp})$
+
+The **XP gain formula** depends on the type of battle mode. Each time the XP exceeds 100 of the total XP, then the Pokemon levels up and each stats is randomly increased between 1 to 5 stats point. For all 3 Pokemon in a team, the amount of XP gained is as follow: 
+- In PvP: 
+
+$ pokemon\_won = 10 + avg\_lvl\_lost\_pokemons - pokemon\_won\_lvl$
+- In PvE: 
+
+$ pokemon = \frac{10 + lvl\_wild\_pokemon - pokemon\_lvl}{3}$
+
+### Ability 
+The `Ability` file is composed of two classes: `Attack` and `Defense` classes. Those classes are pretty straightforward as they define the extraction of information in an attack.txt and defense.txt files (both in the data directory).
 
 ### Data
-
-## Author
-
-👤 **EstelleZheng**
-
-* Github: [@YellowBlackTea](https://github.com/YellowBlackTea)
+The data directory contains 3 main files defining a Pokemon: an attack.txt file, a defense.txt file and a pokemon.txt file. As soon as an name is input, the trainer.txt file is created to register and save it.
 
 ## 📝 License
 
