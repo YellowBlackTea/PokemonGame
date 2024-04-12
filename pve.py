@@ -220,8 +220,8 @@ class PVE(Battle):
             
                 # Start of a round = my pkm starts
                 end = self.self_pokemon_turn()
-    
-                # End either all 3 KO or caught target pkm or flee
+                
+                # Check in case player chose to flee
                 if end == 0:
                     print(f"\nBATTLE END")
                     end = True
@@ -232,8 +232,8 @@ class PVE(Battle):
                 if target_ko == True:
                     xp_points = (10 + self.target_pokemon.level - self.self_pokemon.level) / 3
                     self.get_xp(xp_points)
-                    print(self.self_pokemon)
-                
+                    end = True
+                    break
             
             # Start of a round: target starts
             if start == 1:
@@ -243,11 +243,22 @@ class PVE(Battle):
                     print(f"\nBATTLE END")
                     end = True
                     break
+                
                 target_ko = self.target_pokemon_turn()  
                 
+                end = self.all_ko()
+                if end == 0:
+                    print(f"\nBATTLE END")
+                    end = True
+                    break
+                    
                 # Start of a round (case 1)
                 end = self.self_pokemon_turn()
                 
+                # Special case if target is KO
+                if self.target_pokemon.current_hp == 0:
+                    end = 0 
+
                 # End either all 3 KO or caught target pkm or flee
                 if end == 0:
                     print(f"\nBATTLE END")
@@ -258,7 +269,8 @@ class PVE(Battle):
                 if target_ko == True:
                     xp_points = round((10 + self.target_pokemon.level - self.self_pokemon.level) / 3)
                     self.get_xp(xp_points)
-                    print(self.self_pokemon)
+                    end = True
+                    break
             
             round += 1
             
