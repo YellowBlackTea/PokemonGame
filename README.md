@@ -10,7 +10,7 @@
 
 > An interactive terminal / CLI Pokemon turn-based battle system.
 
-### ✨ [Demo](https://github.com/YellowBlackTea/PokemonGame)
+![demo](./data/demo.png)
 
 ## Description
 A Pokemon turn-based battle game implemented in Python using OOP. This game is exclusively interactive with the CLI. Two different modes can be played: a Player versus Player (PvP) and a Player versus Environnment (PvE).
