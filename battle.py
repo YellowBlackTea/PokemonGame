@@ -73,10 +73,6 @@ class Battle:
 
         Args:
             ability (Attack): Ability as defined in the Attack class. It has a name, a description, a type a cost, a power and accuracy.
-        
-        Returns:
-            None: The battle is not finished
-            int: Return value 1 means that the ennemy pokemon is KO (maybe player won)
         """
         damage = 0
         if self.self_pokemon.current_energy >= ability.cost:
