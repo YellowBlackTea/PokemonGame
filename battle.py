@@ -173,7 +173,7 @@ class Battle:
         Args:
             xp_points (float): xp calulated using formula provided in the instruction.
                 - pve: round((10 + wild_pkm_lvl - own_pkm_lvl) / 3)
-                - pvp: round()
+                - pvp: round(10 + avg_target_lvl - own_pkm_lvl)
             target (bool, optional): If player1 loses, then use target/ennemy formula to gain xp. Defaults to False.
         """
         if target:
