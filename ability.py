@@ -61,9 +61,6 @@ class Attack:
         
     def __str__(self) -> str:
         return f"{self.name:<13} (Attack, {self.type}, Cost: {self.cost:<2}): {self.description}"
-    
-    def attack_success(self):
-        pass
         
 
 class Defense:    
