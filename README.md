@@ -18,7 +18,7 @@ A Pokemon turn-based battle game implemented in Python using OOP. This game is e
 - In the **PvP** mode, the first Player is the one who start the game, s/he then has the ability to search for a registered trainer name. Once found, the battle starts by taking turns. Each player has a team composed of 3 Pokemons, and the possibilities to change the Pokemon in a PC / box storage of a maximum of 6 Pokemons. Whoever wins the battle get XP.
 - In the **PvE** mode, the Player battles against a wild Pokemon, and s/he has the possibility to catch it.
 
-A trainer is automatically registered in a file when a game starts and the user input a name. A same name cannot be registered, so only the newest one will be saved.
+A trainer is automatically registered in a file when a game starts and the user input a name. By registering a same or already existing name will overwrite the current team by pushing it into the PC / box storage.
 
 ### Background
 This project is part of Havard/edX CS50P Final Project. The instruction and the formula for computing the catch rate or the effectiveness of an attack was greatly inspired by Sorbonne Université MU4RBI01 course.
