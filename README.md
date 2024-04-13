@@ -86,7 +86,7 @@ If the Pokemon chooses to defend itself, then a random number is chosen from the
 
 If the Pokemon chooses to launch an Attack, then a random number is chosen between 0 and 100. And if that number is greater than the accuracy of the attack, the Pokemon can sucessfully launch the attack using the following formula to calculate the **damage taken**:
 
-$damage\_taken = round(b * rand(0.85, 1) * \frac{power(4 *  target\_pokemon\_level + 2)}{target\_pokemon\_resistance} + 2)$
+$$damage\_taken = round(b * rand(0.85, 1) * \frac{power(4 *  target\_pokemon\_level + 2)}{target\_pokemon\_resistance} + 2)$$
 
 with b, the coefficient defined in the following table. 
 |   | Air | Water | Fire | Earth |
@@ -99,15 +99,15 @@ with b, the coefficient defined in the following table.
 
 As soon as the wild Pokemon HP falls below 20%, then the Player has the possibility to **catch the Pokemon** using this catch_rate formula.
 
-$catch\_rate = 4 * (0.2 - \frac{target\_current\_hp}{target\_max\_hp})$
+$$catch\_rate = 4 * (0.2 - \frac{target\_current\_hp}{target\_max\_hp})$$
 
 The **XP gain formula** depends on the type of battle mode. Each time the XP exceeds 100 of the total XP, then the Pokemon levels up and each stats is randomly increased between 1 to 5 stats point. For all 3 Pokemon in a team, the amount of XP gained is as follow: 
 - In PvP: 
 
-$ pokemon\_won = 10 + avg\_lvl\_lost\_pokemons - pokemon\_won\_lvl$
+$$pokemon\_won = 10 + avg\_lvl\_lost\_pokemons - pokemon\_won\_lvl$$
 - In PvE: 
 
-$ pokemon = \frac{10 + lvl\_wild\_pokemon - pokemon\_lvl}{3}$
+$$pokemon = \frac{10 + lvl\_wild\_pokemon - pokemon\_lvl}{3}$$
 
 ### Ability 
 The `Ability` file is composed of two classes: `Attack` and `Defense` classes. Those classes are pretty straightforward as they define the extraction of information in an attack.txt and defense.txt files (both in the data directory).
