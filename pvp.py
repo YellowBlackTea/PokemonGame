@@ -197,9 +197,19 @@ class PVP(Battle):
                     self.get_xp(xp_points, target=True)
                     print(f"\nBATTLE END")
                     end = True
-            
+
+                    
                 # Actual start of a round if not KO
                 end = self.self_pokemon_turn(self.self_pokemon)
+                
+                # End either all 3 KO or forfeit
+                if end == 0:
+                    avg_lvl = (self.player2.team[0].level + self.player2.team[1].level + self.player2.team[2].level) / 3
+                    xp_points = (10 + avg_lvl - self.self_pokemon.level)
+                    self.get_xp(xp_points)
+                    print(f"\nBATTLE END")
+                    end = True
+                    break
                 
                 # To test again if any pokemon was KO during this round
                 end = self.all_ko(self.player2)
@@ -221,6 +231,7 @@ class PVP(Battle):
                     self.get_xp(xp_points, target=True)
                     print(f"\nBATTLE END")
                     end = True
+                    break
                     
             
             # Start of a round: Player2 starts
@@ -236,6 +247,15 @@ class PVP(Battle):
                                   
                 # Actual start of a round if not KO
                 end = self.self_pokemon_turn(self.target_pokemon)
+                
+                # End either all 3 KO or forfeit
+                if end == 0:
+                    avg_lvl = (self.player2.team[0].level + self.player2.team[1].level + self.player2.team[2].level) / 3
+                    xp_points = (10 + avg_lvl - self.self_pokemon.level)
+                    self.get_xp(xp_points)
+                    print(f"\nBATTLE END")
+                    end = True
+                    break
                 
                 # To test again if any pokemon was KO during this round
                 end = self.all_ko(self.player)
@@ -257,6 +277,7 @@ class PVP(Battle):
                     self.get_xp(xp_points)
                     print(f"\nBATTLE END")
                     end = True
+                    break
             
             if same_round_count == 2:
                 round += 1

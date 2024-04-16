@@ -127,7 +127,7 @@ def choose_action(player: Player, pokemon_data: list[dict]) -> None:
             case 3:
                 pvp_battle(player)
                 
-                choose_action(player)
+                choose_action(player, pokemon_data)
                         
             case 4:
                 quit_game(player)
