@@ -118,4 +118,4 @@ The data directory contains 3 main files defining a Pokemon: an attack.txt file,
 ## 📝 License
 
 Copyright © 2024 [EstelleZheng](https://github.com/YellowBlackTea).<br />
-This project is [MIT](https://github.com/YellowBlackTea/PokemonGame/blob/main/LICENSE) licensed.
+This project is [Apache 2.0](https://github.com/YellowBlackTea/PokemonGame/blob/main/LICENSE) licensed.
